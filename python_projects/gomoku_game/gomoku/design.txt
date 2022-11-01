@@ -1,0 +1,239 @@
+Nathan Yap CS 5001 - briefly describes how i want to design
+my Gomoku game
+
+I) What data structures I will need
+- I will need to make use of lists
+- I want to make a nested list so that I will be able to easily
+create a matrix behavior of the lists to make the grid for the
+gameboard. I will create a method under GameController to make this
+easy since right now we are working on a 3*3 grid but in part 2
+we will be working on a 15* 15 grid.
+- The grid will also use variables, I will make 0 -> empty, 
+odd number -> draw white circle and even number -> draw black circle. 
+I will assign them as integers. I will use the "%" mod sign to make
+for the program to check if the integer is odd or even.
+
+#################################################################
+
+II) What classes to define
+
+1) GameController
+"""The GameController will start, end the game and
+keep track of the progress of the game"""
+Attributes
+   - self.SQUARE_SIZE
+      this will be the height/width of each grid on
+      the gameboard
+   - self.OFFSET
+      this will shift the drawing of the gomoku play pieces
+      to not start at the edge of gameboard but on the lines
+   - self._pix_w
+      the screen's width
+   - self._pix_h
+      the screen's height
+   - self._w
+      the width of the screen in terms of squares 
+   - self._h
+      the height of the screen in terms of squares 
+   - self._remaining_spots
+      this counts the total number of playable
+      positions on the gameboard
+   - self._playing
+      boolean value that lets the game to start will be True
+   - self._grid
+      this creates the nested lists as a matrix to create the
+      grid for the interactive grid
+   - self._turn
+      this is to add numbers to the nested list to keep track
+      of the turns
+   - self._human_player
+      To create a player for human
+   - self._ai_control
+      create the AI
+   - self._ai_player
+      create the AI player
+   - self._winner
+      this will be a dictionary to collect all the winner
+
+Methods
+   # Please note that in the design, I have not confirmed all parameters
+   # thus, for the purposes of this design, i will only add "self" as A
+   # parameter
+   # Additionally, for the purposes of the design, I will not include
+   # what they will be returning because they are subject to change
+   - draw_background_gameboard(self, tbd)
+      this draws the background for the game board.
+      This refers to the lines of the gomoku game board.
+      Uses a for loop to create the lines
+   - draw_interactive_list_gameboard(self, tbd)
+      this makes the game board look interactive, it converts it
+      into a grid like system and the 0 integer in the grid changes
+      to an odd or even number, it will create the GomokuCircle
+      object to create white or black circles.
+      It will have an if/else code block to check if the position
+      on the board is 0, if its an odd or even number as described above.
+   - update(self, tbd)
+      this will update all the game elements
+      for example it will update whose turn it belongs to right now
+      and it will update the remaining spots left. Since this can keep
+      track of the remaining spots, this method will be in charge of
+      checking if the game is a draw.
+      
+   - end_game(self, tbd)
+      This will check who is the winner or loser will then
+      end the game
+      When a winner is declared, run an input() for the winner's name
+      add that winner's name into the dictionary
+      as a key. Additionally, if winner's name is already inside just add
+      count +1, if not add a new key and initialize value = 1.
+
+   - end_text(self, tbd)
+      we want the game to end with text on the game screen
+      declaring who is the winner or if it's a draw.
+      Something like:
+      if winner == self._human_player:
+         self._winner = self._human_player
+      elif winner == self._ai_player:
+         self._winner = self._ai_player
+      else:
+         self._end_event = event
+         self._playing = False
+
+   - check_five_sequence(self, tbd)
+      we want the GameController to be keeping
+      track of 5 circles in a row to declare a winner. It should be able to
+      check up, right, left, down, diagonal left, diagonal right after every
+      play is made.
+      Since each list will contain an integer that is 0, 1 odd number, 2 even number,
+      it can add like,
+      if (total == 5 or total == 10)
+         see which turn it ended in
+         declare that player as winner
+
+2) PlayerController
+""" This is to create players in the game that can play the game"""
+Attributes
+   - will not have any attributes will be an
+   abstract class for controlling a player
+Methods
+   - set_player(self, tbd)
+      Set the player that will be controlled
+      by this controller. "This" player can be human or AI
+      self._player = player or AI
+
+3) GomokuCircle
+""" This is to draw the black and white circle game pieces"""
+Attributes
+    - self._x -> x coords
+    - self._y -> y coords 
+    - self._circle_color -> set the color of the stone pieces
+    - self._ELLIPSE_SIZE
+      this will be the diameter of the ellipse.
+    - self._OFFSET
+      This will be the value that ensures the circle position
+      will be at the intersections of the grid.
+Methods
+   - display(self)
+      draws the circles/stones out at where the player clicks
+      strokeWeight(CIRCLE_OUTLINE)
+      fill(self._circle_color)
+      ellipse(self._x * self.SQUARE_SIZE + self.OFFSET,
+               self._y * self.SQUARE_SIZE + self.OFFSET,
+               self.ELLIPSE_SIZE,
+               self.ELLIPSE_SIZE)
+
+4) AI
+""" This is to create the AI player to play against"""
+Attributes
+   - self._gc -> so the gameController can create an AI
+
+Method
+   - five_sequence_check(self, tbd)
+      *** Will consider making this into a "score" for the
+      program to make decisions
+      The program needs to be able to add the values
+      of 5 positions of it's own color in adjacent positions to
+      see know if it should add another circle. This includes being
+      able to check all directions like up, down, left, right,
+      diag_right, diag_left
+      if (total == 5 or total == 10)
+
+   - check_playable_position(self, tbd)
+      to check if a position is an option
+      for it to play.
+      if grid[i][j] == 0:
+         AI will be ale to call
+         choose_best_play()
+
+   - choose_best_play(self, tbd)
+      it needs to be able to weigh whether it should
+      extend a consecutive sequence or block a player's sequence or
+      create an enntirely new sequence
+
+#################################################################
+
+III) A bullet-pointed pseudocode of your driver: Tell us about the flow of
+control, and think about the following cases:
+    - When the user makes a move
+    - When it's the computer's turn
+    - When the game over status is assessed
+Driver is the pyde file, explain classes it tries to access all the way
+down to the circles.
+
+1) When the user makes a move
+a) GameController updates the grid based on the player's mouse position,
+once a player clicks on a grid, it will trigger mousePressed() this will
+call GameController to execute the update() method. This will add +1 to
+the 0 integer within that grid. Represented in the nested list.
+GameController will also subtract 1 from the remaining_spots variable.
+b) Since 0 becomes 1 and 1 is an odd number , under the draw() function
+GameController is constantly executing the draw_interactive_list_gameboard()
+method. It will detect this change and will call the GomokuCircle Class to
+create a black circle. 
+c) Basically, the GameController will constantly
+execute the draw_interactive_list_gameboard because it is under the
+draw() function and check each coordinate in the grid and draws black
+or white circles based on the values inside it. Odd is black and even
+is white.
+
+
+2) When it's the computer's turn
+a) AI will call check_playable_position method to first check which
+positions has been filled.
+b) AI will call five_sequence_check method to check a "highest" score on which
+positions has the longest consecutive sequence of its own color
+c) AI can also call this same method to check if opponent has the most
+"dangerous" score on which of the opponent's position has the longest
+consecutive sequence of their color
+d) AI will call choose_best_play method to weigh it's options whether
+to continue its sequence or block the human's play
+e) It selects a position
+f) GameController will detect this change similar to above.
+It will update this move by executing update() and 
+draw_interactive_list_gameboard() method.
+g) GameController will then call on the circle object and
+it will call the method to print either black or white circle
+
+3) When a game over status is assessed
+This will largely be the GameController's responsibility to detect
+whether there is a win/lose/draw.
+DRAW
+a) after updating the grid, check remaining spots variable == 0.
+b) trigger end_game function if remaining spots is 0. Basically if
+there are no more options to click.
+c) end_game will accept an event parameteter = "Full board"
+d) end_text will display "DRAW" when even is set to fullboard.
+WIN/LOSE
+a) Everytime the a player or AI makes a move, the gamecontroller,
+will constantly be using the method check_five_sequence() to
+detect if any of the colors have reached 5 in sequence. once
+it detects a 5 in a row sequence, it will declare the winner
+if the outcome is not a draw. Please note I don't intend to
+design a "lose" scenario because the game will end with a
+draw or end with someone winning.
+
+
+
+
+
+

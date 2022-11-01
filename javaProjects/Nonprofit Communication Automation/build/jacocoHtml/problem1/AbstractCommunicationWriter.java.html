@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractCommunicationWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment8</a> &gt; <a href="index.source.html" class="el_package">problem1</a> &gt; <span class="el_source">AbstractCommunicationWriter.java</span></div><h1>AbstractCommunicationWriter.java</h1><pre class="source lang-java linenums">package problem1;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Pattern;
+
+/**
+ * this is an abstract class that represents an abstract communication writer
+ */
+public abstract class AbstractCommunicationWriter implements ICommunicationWriter{
+
+  protected Map&lt;String, String&gt; commandLineOptions;
+  protected List&lt;HashMap&gt; supporterList;
+
+
+
+  /**
+   * Constructor for an AbstractCommunicationWriter.
+   * @param commandLineOptions a map of commandLine operations, a Map&lt;String, String&gt;.
+   * @param supporterList a List of Hashmaps for each row of a csv File, an ArrayList of Hashmaps.
+   */
+  public AbstractCommunicationWriter(Map&lt;String, String&gt; commandLineOptions,
+<span class="fc" id="L25">      List&lt;HashMap&gt; supporterList) {</span>
+<span class="fc" id="L26">    this.commandLineOptions = commandLineOptions;</span>
+<span class="fc" id="L27">    this.supporterList = supporterList;</span>
+<span class="fc" id="L28">  }</span>
+
+  /**
+   * getter for commandLineOptions
+   * @return commandLineOptions, as a Map with key value strings and value strings
+   */
+  public Map&lt;String, String&gt; getCommandLineOptions() {
+<span class="nc" id="L35">    return commandLineOptions;</span>
+  }
+
+  /**
+   * getter for SupporterList
+   * @return the supporterList as a List of hashmaps
+   */
+  public List&lt;HashMap&gt; getSupporterList() {
+<span class="nc" id="L43">    return supporterList;</span>
+  }
+
+  /**
+   * This is the method to test equals
+   * @param o - this is the object that we can pass in to check for equality, represented by an
+   *          object
+   * @return returns a true or false based on whether the test is passed, as a boolean
+   */
+  @Override
+  public boolean equals(Object o) {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L55">      return true;</span>
+    }
+<span class="nc bnc" id="L57" title="All 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L58">      return false;</span>
+    }
+<span class="nc" id="L60">    AbstractCommunicationWriter that = (AbstractCommunicationWriter) o;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">    return Objects.equals(commandLineOptions, that.commandLineOptions)</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        &amp;&amp; Objects.equals(supporterList, that.supporterList);</span>
+  }
+
+  /**
+   * this is a hashcode method to test for equality of the hashcode
+   * @return returns a hash value of the sequence of input values
+   */
+  @Override
+  public int hashCode() {
+<span class="nc" id="L71">    return Objects.hash(commandLineOptions, supporterList);</span>
+  }
+
+  /**
+   * this method is used to return a string representation of an object
+   * @return - returns the representation of the object, as a String
+   */
+  @Override
+  public String toString() {
+<span class="nc" id="L80">    return &quot;AbstractCommunicationWriter{&quot; +</span>
+        &quot;commandLineOptions=&quot; + commandLineOptions +
+        &quot;, supporterList=&quot; + supporterList +
+        '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

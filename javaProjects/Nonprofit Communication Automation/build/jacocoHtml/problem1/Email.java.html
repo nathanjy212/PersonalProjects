@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Email.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment8</a> &gt; <a href="index.source.html" class="el_package">problem1</a> &gt; <span class="el_source">Email.java</span></div><h1>Email.java</h1><pre class="source lang-java linenums">package problem1;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.*;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * this is a class representing an email
+ */
+public class Email extends AbstractCommunicationWriter{
+
+
+<span class="nc" id="L20">  private static final Pattern PATTERN = Pattern.compile(&quot;\\[\\[(.*?)\\]\\]&quot;);</span>
+
+
+  /**
+   * Constructor for an Email object.
+   * @param commandLineOptions a map of commandLine operations, a Map&lt;String, String&gt;.
+   * @param supporterList a List of Hashmaps for each row of a csv File, an ArrayList of Hashmaps.
+   */
+  public Email(Map&lt;String, String&gt; commandLineOptions, List&lt;HashMap&gt; supporterList) {
+<span class="nc" id="L29">    super(commandLineOptions, supporterList);</span>
+<span class="nc" id="L30">  }</span>
+
+  @Override
+  public String toString() {
+<span class="nc" id="L34">    return &quot;Email{&quot; +</span>
+        &quot;commandLineOptions=&quot; + commandLineOptions +
+        &quot;, supporterList=&quot; + supporterList +
+        '}';
+  }
+
+  /**
+   * Method that opens an email template, replaces the fields
+   * with csv data fields, and writes the new output into a specified
+   * output directory.
+   * @throws FileNotFoundException will throw an exception if the
+   * file is not found.
+   */
+  @Override
+  public void writeCommunication() throws FileNotFoundException {
+    // Need to start at index 1, because index 0 is a map of the column titles
+<span class="nc bnc" id="L50" title="All 2 branches missed.">    for (int i = 1; i &lt; this.supporterList.size(); i++) {</span>
+      try {
+<span class="nc" id="L52">        File myObj = new File(this.commandLineOptions.get(&quot;output&quot;), (String) supporterList.get(i).get(&quot;first_name&quot;) + &quot;_email_&quot; + i + &quot;.txt&quot;);</span>
+<span class="nc" id="L53">        myObj.createNewFile();</span>
+<span class="nc" id="L54">        PrintStream fileStream = new PrintStream(myObj);</span>
+<span class="nc" id="L55">        Scanner input = new Scanner(System.in);</span>
+<span class="nc" id="L56">        File file = new File(this.commandLineOptions.get(&quot;email&quot;));</span>
+<span class="nc" id="L57">        input = new Scanner(file);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        while (input.hasNextLine()) {</span>
+<span class="nc" id="L59">          String line = input.nextLine();</span>
+          //System.out.println(line);
+<span class="nc" id="L61">          Matcher regexMatcher = PATTERN.matcher(line);</span>
+<span class="nc" id="L62">          String replacedString = line;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">          while (regexMatcher.find()) {</span>
+<span class="nc" id="L64">            String one = regexMatcher.group(1);//Finds Matching Pattern in String</span>
+<span class="nc" id="L65">            replacedString = replacedString.replace((CharSequence) (&quot;[[&quot;+one+&quot;]]&quot;),</span>
+<span class="nc" id="L66">                (CharSequence) ((supporterList.get(i)).get(one)));</span>
+<span class="nc" id="L67">          }</span>
+<span class="nc" id="L68">          fileStream.println(replacedString);</span>
+<span class="nc" id="L69">        }</span>
+<span class="nc" id="L70">        input.close();</span>
+<span class="nc" id="L71">      } catch (IOException e) {</span>
+<span class="nc" id="L72">        System.out.println(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L73">        e.printStackTrace();</span>
+<span class="nc" id="L74">      }</span>
+    }
+<span class="nc" id="L76">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

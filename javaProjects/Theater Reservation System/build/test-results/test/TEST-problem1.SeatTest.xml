@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="problem1.SeatTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2022-08-10T20:27:55" hostname="Nathans-Air-3" time="0.016">
+  <properties/>
+  <testcase name="testHashCode_Diff()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="testEqualsDiffName()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="testEqualsDiffNull()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="testEqualsDiffWheelchairAccessible()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="testToString()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="testEqualsDiffObjects()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="testEqualsSame()" classname="problem1.SeatTest" time="0.001"/>
+  <testcase name="getWheelchairAccessible()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="getName()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="setReservedFor()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="testEqualsSameFields()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="testEqualsDiffReservedName()" classname="problem1.SeatTest" time="0.001"/>
+  <testcase name="testHashCode()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="setWheelchairAccessible()" classname="problem1.SeatTest" time="0.002"/>
+  <testcase name="setName()" classname="problem1.SeatTest" time="0.0"/>
+  <testcase name="getReservedFor()" classname="problem1.SeatTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

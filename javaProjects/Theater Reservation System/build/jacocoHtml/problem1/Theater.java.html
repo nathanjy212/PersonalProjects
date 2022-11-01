@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Theater.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment9</a> &gt; <a href="index.source.html" class="el_package">problem1</a> &gt; <span class="el_source">Theater.java</span></div><h1>Theater.java</h1><pre class="source lang-java linenums">package problem1;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+/**
+ * Theater class containing the fields necessary to set up, build, and update a theater.
+ * A theater object contains rows, an arraylist of seats as well as its name.
+ *
+ * The theater maximum capacity is arbitrary and can be set based upon the venue in question.
+ */
+public class Theater {
+
+<span class="fc" id="L14">  private static final Integer START = 0;</span>
+<span class="fc" id="L15">  private static final Integer MAX_SEAT_CAPACITY = 500;</span>
+<span class="fc" id="L16">  private static final Integer MIN_SEATS_ROWS = 1;</span>
+<span class="fc" id="L17">  private static final Integer HALF = 2;</span>
+<span class="fc" id="L18">  private static final Integer SPACING = 10;</span>
+<span class="fc" id="L19">  private static final Integer NA_FILLED = -1;</span>
+<span class="fc" id="L20">  private static final Integer NO_SEATS = 0;</span>
+<span class="fc" id="L21">  private static final Integer LETTERS_IN_ALPHA = 26;</span>
+<span class="fc" id="L22">  private static final String[] ALPHABET = {&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;, &quot;G&quot;,</span>
+      &quot;H&quot;, &quot;I&quot;, &quot;J&quot;, &quot;K&quot;, &quot;L&quot;, &quot;M&quot;, &quot;N&quot;,
+      &quot;O&quot;, &quot;P&quot;, &quot;Q&quot;, &quot;R&quot;, &quot;S&quot;, &quot;T&quot;, &quot;U&quot;,
+      &quot;V&quot;, &quot;W&quot;, &quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;};
+  public static final int EMPTY = 0;
+  public static final int ADJUST = 1;
+
+  private String name;
+  private ArrayList&lt;Row&gt; rowCollection;
+  private Integer numberOfRows;
+  private Integer numberOfSeats;
+  private Integer numberOfWheelChairAccessibleRows;
+
+  /**
+   * Constructor for a Theater object containing rows of seats, a name, and the number of wheelchair
+   * rows.
+   * @param name - the name of the theater, a String.
+   * @param numberOfRows - the number of rows, an Integer.
+   * @param numberOfSeats - the number of seats, an Integer.
+   * @param numberOfWheelChairAccessibleRows - the number of wheelchair accessible rows, an Integer.
+   */
+  public Theater(String name, Integer numberOfRows,
+<span class="fc" id="L44">      Integer numberOfSeats, Integer numberOfWheelChairAccessibleRows) {</span>
+<span class="fc" id="L45">    this.name = name;</span>
+<span class="fc" id="L46">    this.rowCollection = new ArrayList&lt;Row&gt;();</span>
+<span class="fc" id="L47">    this.numberOfRows = numberOfRows;</span>
+<span class="fc" id="L48">    this.numberOfSeats = numberOfSeats;</span>
+<span class="fc" id="L49">    this.numberOfWheelChairAccessibleRows = numberOfWheelChairAccessibleRows;</span>
+<span class="fc" id="L50">  }</span>
+
+  /**
+   * ReturnAlphabet is a method that will use an alphabet list and the seat number to return
+   * the corresponding letter (or double/triple/etc) letter for the seat name (ie Seat 27 will be AA).
+   * @param seat requires an input seat number, an Integer.
+   * @return returns the String name for the seat, a String.
+   */
+  private String returnAlphabet(int seat) {
+<span class="fc" id="L59">    int letterValue = seat % LETTERS_IN_ALPHA;</span>
+<span class="fc" id="L60">    String letter = ALPHABET[letterValue];</span>
+<span class="fc" id="L61">    String returnAlpha = &quot;&quot;;</span>
+<span class="fc" id="L62">    int multiplier = (int) Math.ceil(seat / LETTERS_IN_ALPHA);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">    for (int i = START; i &lt;= multiplier; i++) {</span>
+<span class="fc" id="L64">      returnAlpha = returnAlpha.concat(letter);</span>
+    }
+<span class="fc" id="L66">    return returnAlpha;</span>
+  }
+
+  /**
+   * Prebuild check will ensure the theater about to be built meets the
+   * requirements of a theater.
+   *
+   * If the theater does not meet specifications, then the system will exit.
+   */
+  private void preBuildCheck() {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">    if (this.numberOfWheelChairAccessibleRows == EMPTY) {</span>
+<span class="fc" id="L77">      System.out.println(&quot;You cannot have a theater with no wheelchair&quot;</span>
+          + &quot;accessible rows.&quot;);
+<span class="nc" id="L79">      System.exit(0);</span>
+    }
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">    if (this.numberOfSeats &gt; MAX_SEAT_CAPACITY) {</span>
+<span class="nc" id="L82">      System.out.println(&quot;You cannot have a theater with more than 50 seats.&quot;</span>
+          + &quot;That is too large for your facility! Please rebuild and try&quot;
+          + &quot;again.&quot;);
+<span class="nc" id="L85">      System.exit(0);</span>
+    }
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">    if (this.numberOfSeats &lt; MIN_SEATS_ROWS || this.numberOfRows &lt; MIN_SEATS_ROWS) {</span>
+<span class="nc" id="L88">      System.out.println(&quot;You must have at least one seat per row and at least one row in&quot;</span>
+          + &quot;your theater. Please rebuild and try again.&quot;);
+<span class="nc" id="L90">      System.exit(0);</span>
+    }
+<span class="fc" id="L92">  }</span>
+
+  /**
+   * A private helper method that builds rows that are non-wheelchair accessible.
+   * @return - will return the current count of built rows.
+   */
+  private int buildNonAccessibleRows() {
+<span class="fc" id="L99">    int count = START;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">    for (int i = START; i &lt; this.numberOfRows - this.numberOfWheelChairAccessibleRows; i++) {</span>
+<span class="fc" id="L101">      Row newRow = new Row(this.numberOfSeats, (i+ADJUST), false);</span>
+      // now we build a row of seats
+<span class="fc bfc" id="L103" title="All 2 branches covered.">      for (int j = START; j &lt; this.numberOfSeats; j++) {</span>
+        // we create a seat
+<span class="fc" id="L105">        String seatName = returnAlphabet(j);</span>
+<span class="fc" id="L106">        Seat newSeat = new Seat(seatName, false);</span>
+        // we insert this seat into the row array list
+<span class="fc" id="L108">        newRow.add(newSeat);</span>
+      }
+      // then we add this row into the theater's list of rows
+<span class="fc" id="L111">      this.rowCollection.add(newRow);</span>
+<span class="fc" id="L112">      count++;</span>
+    }
+<span class="fc" id="L114">    return count;</span>
+  }
+
+  /**
+   * A private helper method that builds rows that are wheelchair accessible.
+   * @param rowsBuilt requires an input of the current number of rows that are built.
+   */
+  private void buildWheelchairRows(int rowsBuilt) {
+<span class="fc" id="L122">    int count = rowsBuilt;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">    for (int i = START; i &lt; this.numberOfWheelChairAccessibleRows; i++) {</span>
+<span class="fc" id="L124">      Row newRow = new Row(this.numberOfSeats, (count + ADJUST), true);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">      for (int j = START; j &lt; this.numberOfSeats; j++) {</span>
+<span class="fc" id="L126">        String seatName = returnAlphabet(j);</span>
+<span class="fc" id="L127">        Seat newSeat = new Seat(seatName, true);</span>
+        // we insert this seat into the row array list
+<span class="fc" id="L129">        newRow.add(newSeat);</span>
+      }
+<span class="fc" id="L131">      this.rowCollection.add(newRow);</span>
+<span class="fc" id="L132">      count++;</span>
+    }
+<span class="fc" id="L134">  }</span>
+
+  /**
+   * Method that builds the theater, including all non wheelchair accessible and wheelchair
+   * accessible rows. Will also call helper methods to ensure that the theater specifications meet
+   * the requirements before and after the build.
+   */
+  public void buildTheater() {
+<span class="fc" id="L142">    this.preBuildCheck();</span>
+<span class="fc" id="L143">    int count = this.buildNonAccessibleRows();</span>
+<span class="fc" id="L144">    this.buildWheelchairRows(count);</span>
+<span class="fc" id="L145">  }</span>
+
+  /**
+   * Method that displays a string representation of the theater when called.
+   * @return - returns a 1 when complete.
+   */
+  public int printTheater() {
+<span class="fc" id="L152">    System.out.println(this.name + &quot; Theater Seating\n&quot;);</span>
+<span class="fc" id="L153">    System.out.println(&quot;[[[[   SCREEN   ]]]]&quot;);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">    for (Row row : this.rowCollection) {</span>
+<span class="fc" id="L155">      System.out.print(row.getRowNumber());</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">      if ((row.getRowNumber()) &lt; SPACING) {</span>
+<span class="fc" id="L157">        System.out.print(&quot; &quot;);</span>
+      }
+<span class="fc" id="L159">      System.out.print(&quot; &quot;);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">      for (Seat seat : row) {</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">        if (seat.getReservedFor() == null &amp;&amp; row.getWheelchairAccessible() == false) {</span>
+<span class="fc" id="L162">          System.out.print(&quot;_ &quot;);</span>
+<span class="pc bpc" id="L163" title="1 of 4 branches missed.">        } else if (seat.getReservedFor() == null &amp;&amp; row.getWheelchairAccessible() == true) {</span>
+<span class="fc" id="L164">          System.out.print(&quot;= &quot;);</span>
+        } else {
+<span class="fc" id="L166">          System.out.print(&quot;X &quot;);</span>
+        }
+<span class="fc" id="L168">      }</span>
+<span class="fc" id="L169">      System.out.println();</span>
+<span class="fc" id="L170">    }</span>
+<span class="fc" id="L171">    System.out.println(&quot;|| Entrance || Exit ||\n&quot;);</span>
+<span class="fc" id="L172">    return START;</span>
+  }
+
+  /**
+   * Helper function to make sure you can reserve the appropriate number of seats.
+   * If so, the appropriate number will be reserved.
+   * @param reservedNumberSeats - requires the intended reserved number of seats, an Integer.
+   * @param answerName - requires the reservation name, a String.
+   * @param row - requires the current row from the main method, an Integer.
+   * @return - returns the row of the reservation for the main method to continue.
+   */
+  private int checkToReserve(int reservedNumberSeats, String answerName, int row) {
+<span class="fc" id="L184">    int middle = (int) Math.floor((this.numberOfRows - this.numberOfWheelChairAccessibleRows) / HALF);</span>
+<span class="fc" id="L185">    int reserve = START;</span>
+    // now, we want to make sure we can reserve the seats &quot;reservedNumberSeats&quot; times
+<span class="fc bfc" id="L187" title="All 2 branches covered.">    for (int k = START; k &lt; reservedNumberSeats; k++) {</span>
+      // we need this while loop, if the seat is taken, move to next seat and check
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">      while (this.rowCollection.get(middle - row).get(reserve).getReservedFor() != null) {</span>
+<span class="nc" id="L190">        reserve++;</span>
+      }
+      // once an empty seat is found, we exit the while loop and we go to this if statement
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">      if (this.rowCollection.get(middle - row).get(reserve).getReservedFor() == null) {</span>
+<span class="fc" id="L194">        this.rowCollection.get(middle - row).get(reserve).setReservedFor(answerName);</span>
+<span class="fc" id="L195">        reserve++;</span>
+      }
+    }
+<span class="fc" id="L198">    return (middle - row);</span>
+  }
+
+  /**
+   * Helper function to make sure you can reserve the appropriate number of seats.
+   * If so, the appropriate number will be reserved. This will reserve the seats
+   * closer to the back end of the theater if the first front is filled. Essentially,
+   * we need this method to appropriately rank the rows
+   * @param reservedNumberSeats - requires the intended reserved number of seats, an Integer.
+   * @param answerName - requires the reservation name, a String.
+   * @param row - requires the current row from the main method, an Integer.
+   * @return - returns the row of the reservation for the main method to continue.
+   */
+  private int checkToReserveBack(int reservedNumberSeats, String answerName, int row) {
+<span class="fc" id="L212">    int middle = (int) Math.floor((this.numberOfRows - this.numberOfWheelChairAccessibleRows) / HALF);</span>
+<span class="fc" id="L213">    int reserve = START;</span>
+    // now, we want to make sure we can reserve the seats &quot;reservedNumberSeats&quot; times
+<span class="fc bfc" id="L215" title="All 2 branches covered.">    for (int k = START; k &lt; reservedNumberSeats; k++) {</span>
+      // we need this while loop, if the seat is taken, move to next seat and check
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">      while (this.rowCollection.get(middle + row).get(reserve).getReservedFor() != null) {</span>
+<span class="nc" id="L218">        reserve++;</span>
+      }
+      // once an empty seat is found, we exit the while loop and we go to this if statement
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">      if (this.rowCollection.get(middle + row).get(reserve).getReservedFor() == null) {</span>
+<span class="fc" id="L222">        this.rowCollection.get(middle + row).get(reserve).setReservedFor(answerName);</span>
+<span class="fc" id="L223">        reserve++;</span>
+      }
+    }
+<span class="fc" id="L226">    return (middle + row);</span>
+  }
+
+  /**
+   * A method that will update non-wheelchair accessible rows for a theater reservation.
+   * @param reservedNumberSeats - requires the intended number of seats for reservation, an Integer.
+   * @param answerName - requires the reservation name, a String.
+   * @return will return an Integer (positive number = row of the reservation to be reported to
+   * the user, or a negative number indicating wheelchair rows need to be checked for seats for this
+   * reservation).
+   */
+  public int updateTheaterNoWheelchair(int reservedNumberSeats, String answerName) {
+<span class="fc" id="L238">    int middle = (int) Math.floor((this.numberOfRows - this.numberOfWheelChairAccessibleRows) /HALF);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">    for (int i = START; i &lt;= (middle); i++) {</span>
+<span class="fc" id="L240">      int count = START;</span>
+<span class="fc" id="L241">      int countTwo = START;</span>
+      // first we check how many empty seats are there in this row
+<span class="fc bfc" id="L243" title="All 2 branches covered.">      for (int j = START; j &lt; this.numberOfSeats; j++) {</span>
+<span class="fc" id="L244">        if (this.rowCollection.get(middle - i).get(j)</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">            .getReservedFor() == null) {</span>
+<span class="fc" id="L246">          count++;</span>
+        }
+      }
+<span class="fc bfc" id="L249" title="All 2 branches covered.">      if (count &gt;= reservedNumberSeats) {</span>
+<span class="fc" id="L250">        return checkToReserve( reservedNumberSeats, answerName, i);</span>
+      }
+
+<span class="fc bfc" id="L253" title="All 2 branches covered.">      for (int j = START; j &lt; this.numberOfSeats; j++) {</span>
+<span class="fc" id="L254">        if (this.rowCollection.get(middle + i).get(j)</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">            .getReservedFor() == null) {</span>
+<span class="fc" id="L256">          countTwo++;</span>
+        }
+      }
+<span class="fc bfc" id="L259" title="All 2 branches covered.">      if (countTwo &gt;= reservedNumberSeats) {</span>
+<span class="fc" id="L260">        return checkToReserveBack( reservedNumberSeats, answerName, i);</span>
+      }
+    }
+<span class="fc" id="L263">    System.out.println(&quot;Sorry we don't have that many seats together for you.&quot;);</span>
+<span class="fc" id="L264">    return NA_FILLED;</span>
+  }
+
+  /**
+   * A method that will update wheelchair accessible rows for a theater reservation.
+   * @param reservedNumberSeats - requires the intended number of seats for reservation, an Integer.
+   * @param answerName - requires the reservation name, a String.
+   * @return will return an Integer (non-zero number = row of the reservation to be reported to
+   * the user.
+   *
+   * A zero return indicated the theater is completely filled for a reservation of this size.
+   */
+  public int updateTheaterWheelchair(int reservedNumberSeats, String answerName) {
+<span class="fc" id="L277">    int wheelChairStart = this.numberOfRows - this.numberOfWheelChairAccessibleRows;</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">    for (int i = START; i &lt; this.numberOfWheelChairAccessibleRows; i++) {</span>
+<span class="fc" id="L279">      int count = START;</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">      for (int j = START; j &lt; this.numberOfSeats; j++) {</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if (this.rowCollection.get(((wheelChairStart + i))).get(j).getReservedFor() == null) {</span>
+<span class="fc" id="L282">          count++;</span>
+        }
+      }
+<span class="fc bfc" id="L285" title="All 2 branches covered.">      if (count &gt;= reservedNumberSeats) {</span>
+<span class="fc" id="L286">        int reserve = START;</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">        for (int k = START; k &lt; reservedNumberSeats; k++) {</span>
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">          while (this.rowCollection.get(((wheelChairStart + i))).get(reserve).getReservedFor() != null) {</span>
+<span class="nc" id="L289">            reserve++;</span>
+          }
+<span class="fc" id="L291">          if (this.rowCollection.get(((wheelChairStart + i)))</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">              .get(reserve).getReservedFor() == null) {</span>
+<span class="fc" id="L293">            this.rowCollection.get(((wheelChairStart + i))).get(reserve).setReservedFor(answerName);</span>
+<span class="fc" id="L294">            reserve++;</span>
+          }
+        }
+<span class="fc" id="L297">        return (((wheelChairStart + i)));</span>
+      }
+    }
+<span class="fc" id="L300">    System.out.println(&quot;Sorry we don't have that many wheelchair accessible seats together for you.&quot;);</span>
+<span class="fc" id="L301">    return NO_SEATS;</span>
+  }
+
+  /**
+   * Getter for the theater rowCollection.
+   * @return the theater rowCollection, an Arraylist of Seats.
+   */
+  public ArrayList&lt;Row&gt; getRowCollection() {
+<span class="fc" id="L309">    return rowCollection;</span>
+  }
+
+  /**
+   * Getter for the theater name.
+   * @return the name of the theater, a String.
+   */
+  public String getName() {
+<span class="fc" id="L317">    return name;</span>
+  }
+
+  /**
+   * Equals method to determine if two objects have equivalent fields.
+   * @param o requires an input object for comparison.
+   * @return a boolean, true if equivalent and false if not.
+   */
+  @Override
+  public boolean equals(Object o) {
+<span class="fc bfc" id="L327" title="All 2 branches covered.">    if (this == o) {</span>
+<span class="fc" id="L328">      return true;</span>
+    }
+<span class="pc bpc" id="L330" title="1 of 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="fc" id="L331">      return false;</span>
+    }
+<span class="fc" id="L333">    Theater theater = (Theater) o;</span>
+<span class="pc bpc" id="L334" title="1 of 4 branches missed.">    return Objects.equals(name, theater.name) &amp;&amp; Objects.equals(rowCollection,</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">        theater.rowCollection) &amp;&amp; Objects.equals(numberOfRows, theater.numberOfRows)</span>
+<span class="fc bfc" id="L336" title="All 4 branches covered.">        &amp;&amp; Objects.equals(numberOfSeats, theater.numberOfSeats) &amp;&amp; Objects.equals(</span>
+        numberOfWheelChairAccessibleRows, theater.numberOfWheelChairAccessibleRows);
+  }
+
+  /**
+   * Hashcode method that assigns an integer unique to an object.
+   * @return an integer unique to an object.
+   */
+  @Override
+  public int hashCode() {
+<span class="fc" id="L346">    return Objects.hash(name, rowCollection, numberOfRows, numberOfSeats,</span>
+        numberOfWheelChairAccessibleRows);
+  }
+
+  /**
+   * ToString method is a method that returns a string representation of an object.
+   * @return a string representation of a theater.
+   */
+  @Override
+  public String toString() {
+<span class="fc" id="L356">    return &quot;Theater{&quot; +</span>
+        &quot;name='&quot; + name + '\'' +
+        &quot;, rowCollection=&quot; + rowCollection +
+        &quot;, numberOfRows=&quot; + numberOfRows +
+        &quot;, numberOfSeats=&quot; + numberOfSeats +
+        &quot;, numberOfWheelChairAccessibleRows=&quot; + numberOfWheelChairAccessibleRows +
+        '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="problem1.TheaterTest" tests="22" skipped="1" failures="0" errors="0" timestamp="2022-08-10T20:27:55" hostname="Nathans-Air-3" time="0.504">
+  <properties/>
+  <testcase name="updateTheaterNoWheelchairFail()" classname="problem1.TheaterTest" time="0.007"/>
+  <testcase name="checkToReserveBack()" classname="problem1.TheaterTest" time="0.001"/>
+  <testcase name="printTheaterWithReservedSeat()" classname="problem1.TheaterTest" time="0.003"/>
+  <testcase name="testHashCodeSame()" classname="problem1.TheaterTest" time="0.001"/>
+  <testcase name="testEqualsDiffRows()" classname="problem1.TheaterTest" time="0.001"/>
+  <testcase name="testToString()" classname="problem1.TheaterTest" time="0.0"/>
+  <testcase name="updateTheaterWheelchairSuccess()" classname="problem1.TheaterTest" time="0.001"/>
+  <testcase name="testHashCodeDiffFields()" classname="problem1.TheaterTest" time="0.001"/>
+  <testcase name="testEqualsDiffObjects()" classname="problem1.TheaterTest" time="0.001"/>
+  <testcase name="testTheaterSeatNames()" classname="problem1.TheaterTest" time="0.003"/>
+  <testcase name="testEqualsDiffWheelchairAccessibleRows()" classname="problem1.TheaterTest" time="0.002"/>
+  <testcase name="getName()" classname="problem1.TheaterTest" time="0.0"/>
+  <testcase name="printTheaterLarge()" classname="problem1.TheaterTest" time="0.023"/>
+  <testcase name="printTheaterSmall()" classname="problem1.TheaterTest" time="0.001"/>
+  <testcase name="updateTheaterWheelchairFail()" classname="problem1.TheaterTest" time="0.002"/>
+  <testcase name="testEqualsSameFields()" classname="problem1.TheaterTest" time="0.0"/>
+  <testcase name="updateTheaterNoWheelchairSuccess()" classname="problem1.TheaterTest" time="0.0"/>
+  <testcase name="testEquals()" classname="problem1.TheaterTest" time="0.0"/>
+  <testcase name="testEqualsDiffNames()" classname="problem1.TheaterTest" time="0.0"/>
+  <testcase name="testEqualsDiffSeats()" classname="problem1.TheaterTest" time="0.002"/>
+  <testcase name="testHashCodeDiffObjects()" classname="problem1.TheaterTest" time="0.001"/>
+  <testcase name="preBuildCheckTest()" classname="problem1.TheaterTest" time="0.437">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[Sorry we don't have that many seats together for you.
+Small Theater Seating
+
+[[[[   SCREEN   ]]]]
+1  _ _ X _ _ 
+2  = = X = = 
+|| Entrance || Exit ||
+
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z AA BB CC DD EE FF GG HH II JJ KK LL MM NN OO PP QQ RR SS TT UU VV WW XX YY ZZ AAA BBB CCC DDD EEE FFF GGG HHH III JJJ KKK LLL MMM NNN OOO PPP QQQ RRR SSS TTT UUU VVV WWW XXX YYY ZZZ AAAA BBBB CCCC DDDD EEEE FFFF GGGG HHHH IIII JJJJ KKKK LLLL MMMM NNNN OOOO PPPP QQQQ RRRR SSSS TTTT UUUU VVVV A B C D E F G H I J K L M N O P Q R S T U V W X Y Z AA BB CC DD EE FF GG HH II JJ KK LL MM NN OO PP QQ RR SS TT UU VV WW XX YY ZZ AAA BBB CCC DDD EEE FFF GGG HHH III JJJ KKK LLL MMM NNN OOO PPP QQQ RRR SSS TTT UUU VVV WWW XXX YYY ZZZ AAAA BBBB CCCC DDDD EEEE FFFF GGGG HHHH IIII JJJJ KKKK LLLL MMMM NNNN OOOO PPPP QQQQ RRRR SSSS TTTT UUUU VVVV Large Theater Seating
+
+[[[[   SCREEN   ]]]]
+1  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+2  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+3  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+4  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+5  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+6  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+7  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+8  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+9  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+10 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+11 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+12 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+13 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+14 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+15 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+16 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+17 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+18 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+19 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+20 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+21 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+22 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+23 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+24 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+25 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+|| Entrance || Exit ||
+
+Small Theater Seating
+
+[[[[   SCREEN   ]]]]
+1  _ _ _ _ _ 
+2  = = = = = 
+|| Entrance || Exit ||
+
+Sorry we don't have that many wheelchair accessible seats together for you.
+You cannot have a theater with no wheelchairaccessible rows.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

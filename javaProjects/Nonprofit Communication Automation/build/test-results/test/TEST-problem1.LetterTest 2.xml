@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="problem1.LetterTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-07-27T16:08:26" hostname="Nathans-Air-3" time="0.065">
+  <properties/>
+  <testcase name="testToString()" classname="problem1.LetterTest" time="0.065"/>
+  <system-out><![CDATA[Letter{commandLineOptions={output=~, email=email_template.txt}, supporterList=[{last_name=Yap, first_name=Nathan, email=a@google.com}]}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

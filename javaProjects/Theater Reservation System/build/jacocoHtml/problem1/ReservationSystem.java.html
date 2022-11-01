@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservationSystem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment9</a> &gt; <a href="index.source.html" class="el_package">problem1</a> &gt; <span class="el_source">ReservationSystem.java</span></div><h1>ReservationSystem.java</h1><pre class="source lang-java linenums">package problem1;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Scanner;
+
+/**
+ * A Main class called the reservation system, that will call the necessary builds to run the
+ * reservation service with a theater. When the user exits the service, the quit boolean
+ * will trigger the program to exit and a print statement will display to the user.
+ */
+<span class="nc" id="L16">public class ReservationSystem {</span>
+
+  /**
+   * Main method that takes an input of string arguments from a user.
+   * @param args - requires an input of string arguments (will not be used).
+   */
+  public static void main(String[] args) {
+    // Theater for the build, must have &gt; 1 row and seat and &gt; 1 wheelchair accessible row
+    // can have up to 500 seats (or more if the max capacity is adjusted) otherwise program will quit
+    // This is where you can adjust the fields of a theater
+<span class="nc" id="L26">    Theater theaterOne = new Theater(&quot;Roxy&quot;, 15, 26, 2);</span>
+<span class="nc" id="L27">    theaterOne.buildTheater();</span>
+<span class="nc" id="L28">    boolean runSystem = true;</span>
+<span class="nc" id="L29">    ReservationService reservationServiceOne = new ReservationService(theaterOne);</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">    while (runSystem == true) {</span>
+<span class="nc" id="L31">      runSystem = reservationServiceOne.interactSystem();</span>
+    }
+<span class="nc" id="L33">    System.out.println(&quot;Thank you! Have a nice day!&quot;);</span>
+<span class="nc" id="L34">  }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,109 @@
+Nathan Yap CS 5001 - Brief description of how testing will be.
+
+1) Which functions you tested for Part 1
+There were only methods created under eaach class.
+The only functions in used were those in the .pyde file
+which i did not test because it's part of processing.
+
+GameController
+- test_constructor()
+- test_end_game()
+- test_draw_interactive_list_gameboard()
+- test_h_getter()
+- test_w_getter()
+- test_playing_getter()
+
+GomokuCircle
+- test_constructor()
+
+2) A summary of valid inputs (inputs for which you’d expect a ‘good’ result)
+and expected return values
+
+GameController
+- test_constructor()
+test_coords = (150, 150)
+test_gc = GameController(test_coords)
+assert test_gc._pix_w == test_coords[0]
+assert test_gc._pix_h == test_coords[1]
+assert test_gc._w == test_gc._pix_w//test_gc.SQUARE_SIZE
+assert test_gc._h == test_gc._pix_h//test_gc.SQUARE_SIZE
+
+- test_end_game()
+    test_coords = (150, 150)
+    test_gc = GameController(test_coords)
+    assert test_gc._end_event == 'fullboard'
+    assert not test_gc._playing
+
+
+- test_draw_interactive_list_gameboard()
+    Would not be able to test this because this
+    is a visual test that is processed in Processing3
+
+- test_h_getter()
+    pwidth = 150
+    pheight = 150
+    test_gc = GameController((pwidth, pheight))
+    h = pheight/test_gc.SQUARE_SIZE
+    assert test_gc.h == h
+
+- test_w_getter()
+    pwidth = 150
+    pheight = 150
+    test_gc = GameController((pwidth, pheight))
+    w = pwidth/test_gc.SQUARE_SIZE
+    assert test_gc.w == w
+
+- test_playing_getter()
+    test_coords = (150, 150)
+    test_gc = GameController(test_coords)
+    assert test_gc.playing
+
+
+GomokuCircle
+- test_constructor()
+    I would input a coordinate for where I would expect
+    the circle to be. Which would be the location it appears
+    if a player clicks that spot. 
+    BLACK = 0
+    grid_coords = [0, 0]
+    test_gomoku_circle = GomokuCircle(gird_coords[0], gird_coords[1], BLACK)
+    assert test_gomoku_circle._x == 0
+    assert test_gomoku_circle._y == 0
+
+3) A summary of invalid inputs (inputs for which you’d expect a ‘bad’ result)
+and expected return values
+
+GameController
+- test_constructor()
+    I would think if the user inputs a non-square. e.g. like
+    100 * 150 which is not a sqaure, the game baord prodced
+    would not be functioning properly
+
+- test_end_game()
+    I would think if i passed in a value such as "not win"
+    it will be wrong because so far i only defined "fullbaord"
+    as an end game state
+
+- test_h_getter()
+    if you inserted a location out of bounds it would be invalid
+- test_w_getter()
+    if you inserted a location out of bounds it would be invalid
+- test_playing_getter()
+    if you inserted pixels less than a square size it would be
+    an invalid test.
+
+GomokuCircle
+- test_constructor()
+    If input the grid coords like (50, 50).
+    This would not give a correct output because the values
+    have not gone through floor division.
+
+
+4) Whether you’re confident you’ve verified every reasonable eventuality
+    - I think it would be too overly optimistic to claim i have tested every
+    reasonable eventuality. I think i would further test these methods again
+    when i have incorporated even more methods.
+
+5) Whether your testing revealed any bugs that you then went back and fixed.
+    - I think most of the bugs were discovered as I was building the program.
+    By the time I was pytesting, it was alright.

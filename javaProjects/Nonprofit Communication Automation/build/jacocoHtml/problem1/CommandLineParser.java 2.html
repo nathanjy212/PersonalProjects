@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandLineParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment8</a> &gt; <a href="index.source.html" class="el_package">problem1</a> &gt; <span class="el_source">CommandLineParser.java</span></div><h1>CommandLineParser.java</h1><pre class="source lang-java linenums">package problem1;
+
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Objects;
+
+/**
+ * this represents a class that parses and validates the command from the user that is input
+ * from the command line
+ */
+public class CommandLineParser {
+
+  public static final int MIN_ARGS = 5;
+  private HashMap&lt;String, String&gt; options;
+
+  /**
+   * this is a constructor for the command line parser
+   * @param args - takes in the args, which are the commands given by the user as an array of
+   *             strings
+   */
+<span class="nc" id="L22">  public CommandLineParser(String[] args) {</span>
+<span class="nc" id="L23">    this.options = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L24">    validateArgs(args);</span>
+<span class="nc" id="L25">    fillMap(args);</span>
+<span class="nc" id="L26">    validateMap();</span>
+<span class="nc" id="L27">  }</span>
+
+  /**
+   * this is a getter to get the options hashmap
+   * @return a hashmap of the possible expected commands in the form of a Hashmap where the key
+   * is a string and the value is also a string
+   */
+  public HashMap&lt;String, String&gt; getOptions() {
+<span class="nc" id="L35">    return options;</span>
+  }
+
+  /**
+   * this method validates the length of the args which should be a minimum of 6
+   * @param args
+   */
+  private static void validateArgs(String[] args){
+<span class="nc bnc" id="L43" title="All 2 branches missed.">    if (args.length &gt; MIN_ARGS){</span>
+<span class="nc" id="L44">      return;</span>
+    } else {
+<span class="nc" id="L46">      throw new InvalidArgumentException(&quot;option flags required!&quot;);</span>
+    }
+  }
+
+  /**
+   * this is a method to ensure that the paths that is input from the command line is valid
+   * @param path takes in path from the command line, in the form of a String
+   */
+  private void validatePaths(String path){
+
+<span class="nc" id="L56">    File current = new File(path);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">    if (current.exists()){</span>
+<span class="nc" id="L58">      return;</span>
+<span class="nc" id="L59">    } else throw new RuntimeException(&quot;Invalid path.&quot;);</span>
+  }
+
+  /**
+   * this method basically creates the options map by filling it with the appropriate keys and
+   * values
+   * @param args - takes in the args from the command line as an array of Strings
+   */
+  private void fillMap(String[] args) {
+    int i;
+<span class="nc bnc" id="L69" title="All 2 branches missed.">    for (i = 0; i &lt; args.length; i++) {</span>
+<span class="nc bnc" id="L70" title="All 5 branches missed.">      switch (args[i]) {</span>
+        case OptionFlags.EMAIL_TEMPLATE:
+<span class="nc" id="L72">          i++;</span>
+<span class="nc" id="L73">          validatePaths(args[i]);</span>
+<span class="nc" id="L74">          this.options.put(&quot;email&quot;, args[i]);</span>
+<span class="nc" id="L75">          break;</span>
+        case OptionFlags.LETTER_TEMPLATE:
+<span class="nc" id="L77">          i++;</span>
+<span class="nc" id="L78">          validatePaths(args[i]);</span>
+<span class="nc" id="L79">          this.options.put(&quot;letter&quot;, args[i]);</span>
+<span class="nc" id="L80">          break;</span>
+        case OptionFlags.OUTPUT_DIR:
+<span class="nc" id="L82">          i++;</span>
+          //validatePaths(args[i]);
+<span class="nc" id="L84">          this.options.put(&quot;output&quot;, args[i]);</span>
+<span class="nc" id="L85">          break;</span>
+        case OptionFlags.CSV_FILE:
+<span class="nc" id="L87">          i++;</span>
+<span class="nc" id="L88">          validatePaths(args[i]);</span>
+<span class="nc" id="L89">          this.options.put(&quot;recipients&quot;, args[i]);</span>
+<span class="nc" id="L90">          break;</span>
+        default:
+<span class="nc" id="L92">          throw new InvalidArgumentException(args[i] + &quot; is not a valid argument!&quot;</span>
+              + &quot;The following commands are necessary to run the program:&quot;
+              + &quot;First argument: '--email-template' or '--letter-template'&quot;
+              + &quot;Second argument: ' &lt;path/to/file&gt;'&quot;
+              + &quot;Third argument: ' --output-dir emails' or ' --output-dir letters'&quot;
+              + &quot;Fourth argument: ' &lt;path/to/folder&gt;'&quot;
+              + &quot;Fifth argument: ' --csv-file'&quot;
+              + &quot;Sixth argument: ' &lt;path/to/file&gt;'&quot;
+              + &quot;&quot;
+              + &quot;Example: '--email --email-template email-template.txt --output-dir emails --csv-file customers.csv'&quot;);
+      }
+    }
+<span class="nc" id="L104">  }</span>
+
+  /**
+   * this is another check for the map to ensure that it passes all the requirements as set forth
+   * by the customer
+   */
+  private void validateMap(){
+<span class="nc bnc" id="L111" title="All 2 branches missed.">    if (this.options.containsKey(&quot;output&quot;) &amp;&amp;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        !this.options.get(&quot;output&quot;).isEmpty() &amp;&amp;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        this.options.containsKey(&quot;recipients&quot;) &amp;&amp;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        !this.options.get(&quot;recipients&quot;).isEmpty() &amp;&amp;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        (this.options.containsKey(&quot;letter&quot;) &amp;&amp;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            !this.options.get(&quot;letter&quot;).isEmpty() ||</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            this.options.containsKey(&quot;email&quot;) &amp;&amp;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                !this.options.get(&quot;email&quot;).isEmpty())){</span>
+<span class="nc" id="L119">      return;</span>
+    } else {
+<span class="nc" id="L121">      throw new InvalidArgumentException(&quot;Missing required files.&quot;);</span>
+    }
+  }
+
+  /**
+   * this method is used to return a string representation of an object
+   * @return - returns the representation of the object, as a String
+   */
+  @Override
+  public String toString() {
+<span class="nc" id="L131">    return &quot;CommandLineParser{&quot; +</span>
+        &quot;options=&quot; + options +
+        '}';
+  }
+
+  /**
+   * This is the method to test equals
+   * @param o - this is the object that we can pass in to check for equality, represented by an
+   *          object
+   * @return returns a true or false based on whether the test is passed, as a boolean
+   */
+  @Override
+  public boolean equals(Object o) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L145">      return true;</span>
+    }
+<span class="nc bnc" id="L147" title="All 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L148">      return false;</span>
+    }
+<span class="nc" id="L150">    CommandLineParser that = (CommandLineParser) o;</span>
+<span class="nc" id="L151">    return Objects.equals(options, that.options);</span>
+  }
+
+  /**
+   * this is a hashcode method to test for equality of the hashcode
+   * @return returns a hash value of the sequence of input values
+   */
+  @Override
+  public int hashCode() {
+<span class="nc" id="L160">    return Objects.hash(options);</span>
+  }
+
+
+}
+
+
+  // OLD CODE
+  /*
+  private HashMap&lt;String, String&gt; options;
+
+  public CommandLineParser(String[] args) {
+    this.options = new HashMap&lt;&gt;();
+    validateArgs(args);
+    fillMap(args);
+
+  }
+
+  // Need to build actual validate arguments
+  private static void validateArgs(String[] args){
+    if (args.length &gt; 5){
+      return;
+    } else {
+      throw new InvalidArgumentException(&quot;option flags required!&quot;);
+    }
+  }
+
+  private void validatePaths(String path){
+    try{
+      Paths.get(path);
+    } catch (InvalidPathException | NullPointerException e){
+      System.out.println(e.getMessage());
+    }
+  }
+
+  private void fillMap(String[] args) {
+    int i;
+    for (i = 0; i &lt; args.length; i++) {
+      switch (args[i]) {
+        case OptionFlags.EMAIL_TEMPLATE:
+          i++;
+          validatePaths(args[i]);
+          this.options.put(&quot;email&quot;, args[i]);
+        case OptionFlags.LETTER_TEMPLATE:
+          i++;
+          validatePaths(args[i]);
+          this.options.put(&quot;x&quot;, args[i]);
+        case OptionFlags.OUTPUT_DIR:
+          i++;
+          validatePaths(args[i]);
+          this.options.put(&quot;output&quot;, args[i]);
+        case OptionFlags.CSV_FILE:
+          i++;
+          validatePaths(args[i]);
+          this.options.put(&quot;recipients&quot;, args[i]);
+        default:
+          throw new InvalidArgumentException(args[i] + &quot; is not a valid argument!&quot;);
+
+      }
+    }
+  }
+
+  private void validateMap(){
+    if (this.options.containsKey(&quot;output&quot;) &amp;&amp;
+        this.options.containsKey(&quot;recipients&quot;) &amp;&amp;
+        (this.options.containsKey(&quot;letter&quot;) ||
+            this.options.containsKey(&quot;letter&quot;))){
+      return;
+    } else {
+      throw new InvalidArgumentException(&quot;Missing required files.&quot;);
+    }
+  }
+
+  public HashMap&lt;String, String&gt; getOptions() {
+    return options;
+  }
+
+    private void fillMap(String[] args) {
+    int i;
+    for (i = 0; i &lt; args.length; i++) {
+      switch (args[i]) {
+        case OptionFlags.EMAIL_TEMPLATE:
+          i++;
+          validatePaths(args[i]);
+          this.options.put(&quot;email&quot;, args[i]);
+          break;
+        case OptionFlags.LETTER_TEMPLATE:
+          i++;
+          validatePaths(args[i]);
+          this.options.put(&quot;letter&quot;, args[i]);
+          break;
+        case OptionFlags.OUTPUT_DIR:
+          i++;
+          validatePaths(args[i]);
+          this.options.put(&quot;output&quot;, args[i]);
+          break;
+        case OptionFlags.CSV_FILE:
+          i++;
+          validatePaths(args[i]);
+          this.options.put(&quot;recipients&quot;, args[i]);
+          break;
+        default:
+          throw new InvalidArgumentException(args[i] + &quot; is not a valid argument!&quot;
+              + &quot;The following commands are necessary to run the program:&quot;
+              + &quot;First argument: '--email-template' or '--letter-template'&quot;
+              + &quot;Second argument: ' &lt;path/to/file&gt;'&quot;
+              + &quot;Third argument: ' --output-dir emails' or ' --output-dir letters'&quot;
+              + &quot;Fourth argument: ' &lt;path/to/folder&gt;'&quot;
+              + &quot;Fifth argument: ' --csv-file'&quot;
+              + &quot;Sixth argument: ' &lt;path/to/file&gt;'&quot;
+              + &quot;&quot;
+              + &quot;Example: '--email --email-template email-template.txt --output-dir emails --csv-file customers.csv'&quot;);
+      }
+    }
+  }
+
+  private void fillMap(String[] args) {
+    int i;
+    for (i = 0; i &lt; args.length; i++) {
+      if (args[i].contains(OptionFlags.EMAIL_TEMPLATE)) {
+        i++;
+        validatePaths(args[i]);
+        this.options.put(&quot;email&quot;, args[i]);
+      } else if (args[i].contains(OptionFlags.LETTER_TEMPLATE)) {
+        i++;
+        validatePaths(args[i]);
+        this.options.put(&quot;letter&quot;, args[i]);
+      }else if (args[i].contains(OptionFlags.OUTPUT_DIR)) {
+        i++;
+        validatePaths(args[i]);
+        this.options.put(&quot;output&quot;, args[i]);
+      } else if (args[i].contains(OptionFlags.CSV_FILE)) {
+        i++;
+        validatePaths(args[i]);
+        this.options.put(&quot;recipients&quot;, args[i]);}
+      else {
+        System.out.println((args[i] + &quot; is not a valid argument!&quot;
+              + &quot;The following commands are necessary to run the program:&quot;
+              + &quot;First argument: '--email-template' or '--letter-template'&quot;
+              + &quot;Second argument: ' &lt;path/to/file&gt;'&quot;
+              + &quot;Third argument: ' --output-dir emails' or ' --output-dir letters'&quot;
+              + &quot;Fourth argument: ' &lt;path/to/folder&gt;'&quot;
+              + &quot;Fifth argument: ' --csv-file'&quot;
+              + &quot;Sixth argument: ' &lt;path/to/file&gt;'&quot;
+              + &quot;&quot;
+              + &quot;Example: '--email --email-template email-template.txt --output-dir emails --csv-file customers.csv'&quot;));
+        System.exit(0);
+      }
+    }
+  }
+
+*/
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

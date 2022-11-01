@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Seat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment9</a> &gt; <a href="index.source.html" class="el_package">problem1</a> &gt; <span class="el_source">Seat.java</span></div><h1>Seat.java</h1><pre class="source lang-java linenums">package problem1;
+
+import java.util.Objects;
+
+/**
+ * Seat class contains the information necessary to construct a Seat object which contains the seat
+ * name, its reserved name (if one exists, else it will initialize as null), and whether it
+ * is wheelchair accessible.
+ */
+public class Seat {
+
+  private String name;
+  private String reservedFor;
+
+  private Boolean wheelchairAccessible;
+
+  /**
+   * First constructor for an empty seat object, will construct when a theater is built.
+   * @param name - requires a seat name, a String.
+   * @param wheelchairAccessible - requires the reservation name, a String.
+   *
+   * Will also be updated with wheelchair accessibility upon construction.
+   */
+<span class="fc" id="L24">  public Seat(String name, Boolean wheelchairAccessible) {</span>
+<span class="fc" id="L25">    this.name = name;</span>
+<span class="fc" id="L26">    this.reservedFor = null;</span>
+<span class="fc" id="L27">    this.wheelchairAccessible = wheelchairAccessible;</span>
+<span class="fc" id="L28">  }</span>
+
+  /**
+   * Second constructor for a seat object, in case a pre-made reservation exists/want to replace the
+   * seat with one with a reservation name.
+   * @param name - requires a seat name, a String.
+   * @param reservedFor - requires a person's name whom the seat is reserved for
+   * @param wheelchairAccessible - requires the reservation name, a String.
+   *
+   * Will also be updated with wheelchair accessibility upon construction.
+   */
+<span class="fc" id="L39">  public Seat(String name, String reservedFor, Boolean wheelchairAccessible) {</span>
+<span class="fc" id="L40">    this.name = name;</span>
+<span class="fc" id="L41">    this.reservedFor = reservedFor;</span>
+<span class="fc" id="L42">    this.wheelchairAccessible = wheelchairAccessible;</span>
+<span class="fc" id="L43">  }</span>
+
+  /**
+   * Getter for the seat name.
+   * @return - the name of the seat, a String.
+   */
+  public String getName() {
+<span class="fc" id="L50">    return name;</span>
+  }
+
+  /**
+   * Getter for the reservation name for the seat.
+   * @return - the reservation name for the seat, a String.
+   */
+  public String getReservedFor() {
+<span class="fc" id="L58">    return reservedFor;</span>
+  }
+
+  /**
+   * Getter for the wheelchair accessibility information for the seat.
+   * @return - returns the wheelchair accessibility information for the seat, a boolean.
+   */
+  public Boolean getWheelchairAccessible() {
+<span class="fc" id="L66">    return wheelchairAccessible;</span>
+  }
+
+  /**
+   * Setter for the seat name.
+   * @param name - requires the name of the seat, a String.
+   */
+  public void setName(String name) {
+<span class="fc" id="L74">    this.name = name;</span>
+<span class="fc" id="L75">  }</span>
+
+  /**
+   * Setter for the reservation name for the seat.
+   * @param reservedFor - requires the reservation name for the seat, a String.
+   */
+  public void setReservedFor(String reservedFor) {
+<span class="fc" id="L82">    this.reservedFor = reservedFor;</span>
+<span class="fc" id="L83">  }</span>
+
+  /**
+   * Setter for the wheelchair accessibility information for the seat.
+   * @param wheelchairAccessible - requires the wheelchair accessibility information for the seat, a boolean.
+   */
+  public void setWheelchairAccessible(Boolean wheelchairAccessible) {
+<span class="fc" id="L90">    this.wheelchairAccessible = wheelchairAccessible;</span>
+<span class="fc" id="L91">  }</span>
+
+  /**
+   * Equals method to determine if two objects have equivalent fields.
+   * @param o requires an input object for comparison.
+   * @return a boolean, true if equivalent and false if not.
+   */
+  @Override
+  public boolean equals(Object o) {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">    if (this == o) {</span>
+<span class="fc" id="L101">      return true;</span>
+    }
+<span class="fc bfc" id="L103" title="All 4 branches covered.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="fc" id="L104">      return false;</span>
+    }
+<span class="fc" id="L106">    Seat seat = (Seat) o;</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">    return Objects.equals(name, seat.name) &amp;&amp; Objects.equals(reservedFor,</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        seat.reservedFor) &amp;&amp; Objects.equals(wheelchairAccessible,</span>
+        seat.wheelchairAccessible);
+  }
+
+  /**
+   * Hashcode method that assigns an integer unique to an object.
+   * @return an integer unique to an object.
+   */
+  @Override
+  public int hashCode() {
+<span class="fc" id="L118">    return Objects.hash(name, reservedFor, wheelchairAccessible);</span>
+  }
+
+  /**
+   * ToString method is a method that returns a string representation of an object.
+   * @return a string representation of a theater.
+   */
+  @Override
+  public String toString() {
+<span class="fc" id="L127">    return &quot;Seat{&quot; +</span>
+        &quot;name='&quot; + name + '\'' +
+        &quot;, reservedFor='&quot; + reservedFor + '\'' +
+        &quot;, wheelchairAccessible=&quot; + wheelchairAccessible +
+        '}';
+  }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

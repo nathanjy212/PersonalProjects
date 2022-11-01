@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="problem1.ReservationServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-08-10T20:27:55" hostname="Nathans-Air-3" time="0.078">
+  <properties/>
+  <testcase name="testHashCodeDiff()" classname="problem1.ReservationServiceTest" time="0.049"/>
+  <testcase name="testToString()" classname="problem1.ReservationServiceTest" time="0.012"/>
+  <testcase name="testEqualsDiffObjects()" classname="problem1.ReservationServiceTest" time="0.003"/>
+  <testcase name="testEqualsNull()" classname="problem1.ReservationServiceTest" time="0.002"/>
+  <testcase name="testEqualsSameFields()" classname="problem1.ReservationServiceTest" time="0.002"/>
+  <testcase name="testEqualsDiffTheaters()" classname="problem1.ReservationServiceTest" time="0.002"/>
+  <testcase name="testHashCode()" classname="problem1.ReservationServiceTest" time="0.001"/>
+  <testcase name="testEquals()" classname="problem1.ReservationServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

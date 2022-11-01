@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CSVProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment8</a> &gt; <a href="index.source.html" class="el_package">problem1</a> &gt; <span class="el_source">CSVProcessor.java</span></div><h1>CSVProcessor.java</h1><pre class="source lang-java linenums">package problem1;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * Class containing the methods necessary to open, read through a csv data file,
+ * and generate an array list of maps for each row of the csv file.
+ * The class will open and read through a CSV file of NonProfit Supporters, process the file,
+ * and extract the necessary information.
+ */
+public class CSVProcessor {
+  // Will be used to access the CSV path
+  private Map&lt;String, String&gt; commandLineOptions;
+  // HashMap supporter fields is a map of the  (key = number of rows, value = column title)
+  // Used to create the arraylist of maps, allows for any CSV file to be used or for this
+  // CSV file to be changed
+  private HashMap&lt;Integer, String&gt; supporterFields;
+<span class="nc" id="L26">  private final String DELIMITER = &quot;(\&quot;,\&quot;)&quot;;</span>
+
+  // List of hashmaps  for each supporter pecific supporter field can be accessed via:
+  // value needed = supporterList.get(list index).get(key)
+  private List&lt;HashMap&gt; supporterList;
+
+  /**
+   * Constructor for the CSVProcessor. Initializes an empty arraylist of supporterField hashmaps,
+   * and an empty HashMap of supporterFields (CSV Column titles).
+   * @param commandLineOptions - takes in the command line options to help process the CSV file, as
+   *                           a hashmap where the key is a String and the value is a String
+   */
+<span class="nc" id="L38">  public CSVProcessor(HashMap&lt;String, String&gt; commandLineOptions) {</span>
+<span class="nc" id="L39">    this.commandLineOptions = commandLineOptions;</span>
+<span class="nc" id="L40">    this.supporterFields = new HashMap&lt;Integer, String&gt;();</span>
+<span class="nc" id="L41">    this.supporterList = new ArrayList();</span>
+<span class="nc" id="L42">  }</span>
+
+  /**
+   * Method that creates a titleMap of the column titles (Key = Integer/Index, Value = column title)
+   * @param line requires an input line, the first line of the CSV file.
+   */
+  private void createTitleMap(String line) {
+<span class="nc" id="L49">    String[] title = line.split(DELIMITER);</span>
+<span class="nc" id="L50">    int length = title.length;</span>
+    int i;
+<span class="nc bnc" id="L52" title="All 2 branches missed.">    for (i = 0; i &lt; length; i++) {</span>
+      // Removes the first and last parenthesis accidentally captured
+<span class="nc" id="L54">      title[i] = title[i].replaceAll(&quot;\&quot;&quot;, &quot;&quot;);</span>
+<span class="nc" id="L55">      this.supporterFields.put(i, title[i]);</span>
+    }
+<span class="nc" id="L57">  }</span>
+
+  /**
+   * Method that creates a SupporterMap based on the CSV row being read
+   * (Key = the column title, a String, Value = the supporter's information, a String)
+   * @param line requires an input line, the current row being read.
+   */
+  private void createSupporterMap(String line) {
+<span class="nc" id="L65">    String[] fields = line.split(DELIMITER);</span>
+<span class="nc" id="L66">    int length = fields.length;</span>
+    int i;
+    // Putting the supporters' info into their own map Key = field title
+    // Value = their field
+<span class="nc" id="L70">    HashMap supporterInfo = new HashMap&lt;String, String&gt;();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">    for (i = 0; i &lt; length; i++) {</span>
+      // This should take care of any case where a field is blank but needs an input
+      // If &quot;&quot; is in map, template writing loop will be cut off early
+<span class="nc bnc" id="L74" title="All 2 branches missed.">      if (fields[i].equals(&quot;&quot;)) {</span>
+<span class="nc" id="L75">        fields[i] = &quot;No Info on File&quot;;</span>
+      }
+      // Removes the first and last parenthesis accidentally captured
+<span class="nc" id="L78">      fields[i] = fields[i].replaceAll(&quot;\&quot;&quot;, &quot;&quot;);</span>
+<span class="nc" id="L79">      supporterInfo.put(this.supporterFields.get(i), fields[i]);</span>
+    }
+<span class="nc" id="L81">    this.supporterList.add(supporterInfo);</span>
+<span class="nc" id="L82">  }</span>
+
+  /**
+   * Getter for the supporter fields, a HashMap of column titles.
+   * @return returns a HashMap.
+   */
+  public HashMap&lt;Integer, String&gt; getSupporterFields() {
+<span class="nc" id="L89">    return this.supporterFields;</span>
+  }
+
+  /**
+   * Getter for the SupporterListMap.
+   * @return A list of Hashmaps, one for each supporter.
+   */
+  public List&lt;HashMap&gt; getSupporterList() {
+<span class="nc" id="L97">    return this.supporterList;</span>
+  }
+
+  /**
+   * A method that opens, reads through a csv file and then will call helper
+   * methods to extract and store the relevant data from the csv file.
+   */
+  public void readSupporters() {
+<span class="nc" id="L105">    BufferedReader inputFile = null;</span>
+    try {
+<span class="nc" id="L107">      inputFile = new BufferedReader(new FileReader(this.commandLineOptions.get(&quot;recipients&quot;)));</span>
+      String line;
+<span class="nc" id="L109">      int count = 0;</span>
+
+<span class="nc bnc" id="L111" title="All 2 branches missed.">      while((line = inputFile.readLine()) != null) {</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (count == 0) {</span>
+<span class="nc" id="L113">          this.createTitleMap(line);</span>
+<span class="nc" id="L114">          count += 1;</span>
+        }
+<span class="nc" id="L116">        this.createSupporterMap(line);</span>
+      }
+<span class="nc" id="L118">    } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L119">      throw new InvalidArgumentException(&quot;File not found!&quot;);</span>
+<span class="nc" id="L120">    } catch (IOException e) {</span>
+<span class="nc" id="L121">      throw new InvalidArgumentException(&quot;Something went wrong when reading the file.&quot;);</span>
+<span class="nc" id="L122">    }</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">    if (inputFile == null) {</span>
+        try {
+<span class="nc" id="L125">          inputFile.close();</span>
+<span class="nc" id="L126">        } catch (IOException ioe) {</span>
+<span class="nc" id="L127">          throw new InvalidArgumentException(&quot;Could not close the file!&quot;);</span>
+<span class="nc" id="L128">        }</span>
+      }
+<span class="nc" id="L130">    }</span>
+
+  /**
+   * A method that generates a string representation of the object.
+   * @return a string representation of the object.
+   */
+  @Override
+  public String toString() {
+<span class="nc" id="L138">    return &quot;CSVProcessor{&quot; +</span>
+        &quot;supporterFields=&quot; + supporterFields +
+        &quot;, supporterList=&quot; + supporterList +
+        '}';
+  }
+
+  /**
+   * A method that compares two objects to see if the fields are the same.
+   * @param o requires an input object to compare.
+   * @return returns a boolean true or false.
+   */
+  @Override
+  public boolean equals(Object o) {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L152">      return true;</span>
+    }
+<span class="nc bnc" id="L154" title="All 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L155">      return false;</span>
+    }
+<span class="nc" id="L157">    CSVProcessor that = (CSVProcessor) o;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">    return Objects.equals(supporterFields, that.supporterFields)</span>
+<span class="nc bnc" id="L159" title="All 4 branches missed.">        &amp;&amp; Objects.equals(DELIMITER, that.DELIMITER) &amp;&amp; Objects.equals(</span>
+        supporterList, that.supporterList);
+  }
+
+  /**
+   * A method that sees if two objects are the same.
+   * @return an integer value unique to the input.
+   */
+  @Override
+  public int hashCode() {
+<span class="nc" id="L169">    return Objects.hash(supporterFields, DELIMITER, supporterList);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
