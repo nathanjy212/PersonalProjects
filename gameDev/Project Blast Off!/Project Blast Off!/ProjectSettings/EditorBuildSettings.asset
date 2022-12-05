@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Jump Over.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
     path: Assets/Scenes/Zig Zag.unity
     guid: 5219e9b8baee148f38a33aa1ef8acff0
+  - enabled: 1
+    path: Assets/Scenes/Slide Through.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Chamber of Secrets.unity
+    guid: 11fc682afe7bc438db5ca1a3332ba9c8
   m_configObjects: {}

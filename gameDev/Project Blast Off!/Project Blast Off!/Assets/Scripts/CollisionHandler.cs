@@ -13,6 +13,7 @@ public class CollisionHandler : MonoBehaviour
     AudioSource audioSource;
 
     bool isTransitioning;
+    bool collisionDisable = false;
 
 
     // in order for you to make sure the SerializedField thing works
@@ -22,11 +23,21 @@ public class CollisionHandler : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    void Update() {
+        RespondToDebugKeys();
+    }
 
+    void RespondToDebugKeys() {
+        if (Input.GetKeyDown(KeyCode.L)) {
+            LoadNextLevel();
+        } else if (Input.GetKeyDown(KeyCode.C)) {
+            collisionDisable = !collisionDisable; // this will toggle collision
+        }
+    }
 
     void OnCollisionEnter(Collision other) {
 
-        if (isTransitioning == true) {
+        if (isTransitioning == true || collisionDisable == true) {
             return;
         }
 

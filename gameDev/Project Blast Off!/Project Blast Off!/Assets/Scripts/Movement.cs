@@ -43,43 +43,59 @@ public class Movement : MonoBehaviour
         // this is for the space jump button
         if (Input.GetKey(KeyCode.Space) == true) {
             // vector 3 can help keep track of 3 things when rocket is moving
-            rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime); // this can also be Vector3.up // this Time.deltaTime makes the graphics card thing indpenedent
-            if (!audioSource.isPlaying) {
-                audioSource.PlayOneShot(mainEngine);
-            }
-            // play the main booster particles here
-            if (!mainEngineParticles.isPlaying) {
-                mainEngineParticles.Play();
-            }
-            
-            
+            StartThrusting();
         } else {
-            audioSource.Stop();
-            mainEngineParticles.Stop();
+            StopThrusting();            
         }
     }
 
     void ProcessRotation() {
         // this is for the left button and the right button
         if (Input.GetKey(KeyCode.A) == true) {
-            ApplyRotation(rotationThrust);
-            if (!rightThrusterParticles.isPlaying) {
-                rightThrusterParticles.Play();
-            }
-
+            MoveLeft();
         } else if (Input.GetKey(KeyCode.D) == true) {
-            ApplyRotation(-rotationThrust);
-            if (!leftThrusterParticles.isPlaying) {
-                leftThrusterParticles.Play();
-            }
+            MoveRight();
         } else {
-            rightThrusterParticles.Stop();
-            leftThrusterParticles.Stop();
+            StopAnyRotation();            
         }
     }
 
-    void ApplyRotation(float rotationThisFrame) {
+    void StartThrusting() {
+        rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime); // this can also be Vector3.up // this Time.deltaTime makes the graphics card thing indpenedent
+        if (!audioSource.isPlaying) {
+            audioSource.PlayOneShot(mainEngine);
+        }
+        // play the main booster particles here
+        if (!mainEngineParticles.isPlaying) {
+            mainEngineParticles.Play();
+        }
+    }
 
+    void StopThrusting() {
+        audioSource.Stop();
+        mainEngineParticles.Stop();
+    }
+
+    void MoveLeft() {
+        ApplyRotation(rotationThrust);
+        if (!rightThrusterParticles.isPlaying) {
+            rightThrusterParticles.Play();
+        }
+    }
+
+    void MoveRight() {
+        ApplyRotation(-rotationThrust);
+        if (!leftThrusterParticles.isPlaying) {
+            leftThrusterParticles.Play();
+        }
+    }
+
+    void StopAnyRotation() {
+        rightThrusterParticles.Stop();
+        leftThrusterParticles.Stop();
+    }
+
+    void ApplyRotation(float rotationThisFrame) {
         rb.freezeRotation = true; // freezing rotation so we can manually rotate
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
         rb.freezeRotation = false; // unfreeze rotation so that the physics system can take over
